@@ -25,7 +25,7 @@ public class Game
                 break;
             }
             round++;
-            if (round == ROUNDS_PER_TURN)
+            if (round % ROUNDS_PER_TURN == 0)
             {
                 checkWinner();
                 if (!askToContinue())
@@ -36,6 +36,25 @@ public class Game
             }
         }
         IO.println("Goodbye!");
+
+        IO.println("Rounds played: " + round);
+        showTotalWins();
+    }
+
+    private void showTotalWins()
+    {
+        if (playerOne.getTotalWins() > playerTwo.getTotalWins())
+        {
+            IO.println(playerOne.getFullName() + " won with " + playerOne.getTotalWins() + " total wins!");
+        }
+        else if (playerTwo.getTotalWins() > playerOne.getTotalWins())
+        {
+            IO.println(playerTwo.getFullName() + " won with " + playerTwo.getTotalWins() + " total wins!");
+        }
+        else
+        {
+            IO.println("Both players have " + playerOne.getTotalWins() + " wins!");
+        }
     }
 
     private boolean playRound()
@@ -98,7 +117,6 @@ public class Game
     {
         playerOne.resetScore();
         playerTwo.resetScore();
-        round = 0;
     }
 
     private Player createPlayer(int playersNumber)

@@ -6,6 +6,9 @@ public class Player
     private final String lastName;
     private int score;
 
+    private int totalWins;
+
+
     public Player(String firstName, String lastName)
     {
         if (firstName.isBlank() || lastName.isBlank())
@@ -15,6 +18,17 @@ public class Player
         this.firstName = firstName;
         this.lastName = lastName;
         this.score = 0;
+        this.totalWins = 0;
+    }
+
+    public int getTotalWins()
+    {
+        return totalWins;
+    }
+
+    public void increaseTotalWins()
+    {
+        this.totalWins++;
     }
 
     public void resetScore()

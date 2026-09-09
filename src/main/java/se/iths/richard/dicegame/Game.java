@@ -59,7 +59,7 @@ public class Game
             }
             scorePoints(player);
         }
-        scorePoints(player);
+        IO.println(player.getFullName() + " final score is: " + player.getScore());
         return true;
     }
 
@@ -68,10 +68,12 @@ public class Game
         if (playerOne.getScore() > playerTwo.getScore())
         {
             IO.println(playerOne.getFullName() + " won the game!");
+            playerOne.increaseTotalWins();
         }
         else if (playerOne.getScore() < playerTwo.getScore())
         {
             IO.println(playerTwo.getFullName() + " won the game!");
+            playerTwo.increaseTotalWins();
         }
         else
         {
@@ -83,7 +85,7 @@ public class Game
     {
         int tempScore = Dice.throwDice();
         player.addToScore(tempScore);
-        IO.println(player.getFullName() + " threw: " + player.getScore());
+        IO.println(player.getFullName() + " threw: " + tempScore);
     }
 
     private boolean askToContinue()

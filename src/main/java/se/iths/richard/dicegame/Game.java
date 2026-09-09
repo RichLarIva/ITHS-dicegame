@@ -10,7 +10,7 @@ public class Game
     private static final int THROWS_PER_TURN = 2;
     private static final int ROUNDS_PER_TURN = 1;
 
-    private static final String MENU = "Currently in game!\nq. to quit: ";
+    private static final String MENU = "Hit any key to continue:\nq. to quit: ";
     private static final String CONTINUE_MENU = "Do you wish to continue?\n1. Yes\n2. No:";
 
     public void startGame()

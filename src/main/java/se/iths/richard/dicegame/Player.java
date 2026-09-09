@@ -8,6 +8,10 @@ public class Player
 
     public Player(String firstName, String lastName)
     {
+        if (firstName.isBlank() || lastName.isBlank())
+        {
+            throw new IllegalArgumentException("Names can't be empty");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.score = 0;
@@ -39,5 +43,11 @@ public class Player
     public String getFullName()
     {
         return String.format("%s %s", firstName, lastName);
+    }
+
+    @Override
+    public String toString()
+    {
+        return getFullName() + "Score: " + this.score;
     }
 }

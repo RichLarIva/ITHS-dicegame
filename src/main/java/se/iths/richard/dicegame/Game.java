@@ -7,39 +7,97 @@ public class Game
     private Player playerTwo;
     public static int round = 0;
 
-    private static final String menu = "Currently in game!\nq. to quit";
+    private static final int THROWS_PER_TURN = 2;
+    private static final int ROUNDS_PER_TURN = 1;
+
+    private static final String MENU = "Currently in game!\nq. to quit: ";
+    private static final String CONTINUE_MENU = "Do you wish to continue?\n1. Yes\n2. No:";
 
     public void startGame()
     {
-
         IO.println("WELCOME TO RICHARDS DICE GAME!!!!\n");
-
-        IO.println("Create first player");
         playerOne = createPlayer(1);
-
-        IO.println("Create second player");
         playerTwo = createPlayer(2);
-
-        while(!isDone)
+        while (!isDone)
         {
-            IO.println(menu);
-            String input = IO.readln();
-            switch(input)
+            if (!playRound())
             {
-                case "q":
+                break;
+            }
+            round++;
+            if (round == ROUNDS_PER_TURN)
+            {
+                checkWinner();
+                if (!askToContinue())
+                {
                     isDone = true;
-                    break;
-                default:
-                    if(round % 2 == 0)
-                    {
-                        playerTwo.addToScore(Dice.throwDice());
-
-                    }
+                }
+                resetGame();
             }
         }
-
+        IO.println("Goodbye!");
     }
 
+    private boolean playRound()
+    {
+        if (!takeTurn(playerOne))
+        {
+            return false;
+        }
+
+        return takeTurn(playerTwo);
+    }
+
+    private boolean takeTurn(Player player)
+    {
+        for (int i = 0; i < THROWS_PER_TURN; i++)
+        {
+            String input = IO.readln(MENU).trim();
+            if (input.equalsIgnoreCase("q"))
+            {
+                return false;
+            }
+            scorePoints(player);
+        }
+        scorePoints(player);
+        return true;
+    }
+
+    private void checkWinner()
+    {
+        if (playerOne.getScore() > playerTwo.getScore())
+        {
+            IO.println(playerOne.getFullName() + " won the game!");
+        }
+        else if (playerOne.getScore() < playerTwo.getScore())
+        {
+            IO.println(playerTwo.getFullName() + " won the game!");
+        }
+        else
+        {
+            IO.println("Nobody won the game!");
+        }
+    }
+
+    private void scorePoints(Player player)
+    {
+        int tempScore = Dice.throwDice();
+        player.addToScore(tempScore);
+        IO.println(player.getFullName() + " threw: " + player.getScore());
+    }
+
+    private boolean askToContinue()
+    {
+        String input = IO.readln(CONTINUE_MENU).trim();
+        return !input.equalsIgnoreCase("2") && !input.equalsIgnoreCase("no");
+    }
+
+    private void resetGame()
+    {
+        playerOne.resetScore();
+        playerTwo.resetScore();
+        round = 0;
+    }
 
     private Player createPlayer(int playersNumber)
     {

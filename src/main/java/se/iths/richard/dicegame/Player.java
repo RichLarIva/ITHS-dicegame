@@ -17,6 +17,11 @@ public class Player
         this.score = 0;
     }
 
+    public void resetScore()
+    {
+        score = 0;
+    }
+
     public int getScore()
     {
         return score;
